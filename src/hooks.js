@@ -36,3 +36,23 @@ export const usePersistedState = (arg1, arg2 = undefined) => {
   }, [state]);
   return [state, setState];
 };
+
+export const useExtendedPersistedState = (key, initialValue) => {
+  const { shouldPersist, appName } = useContext(AppContext);
+
+  const lookupKey = `${appName}:LOCAL_STATE:${key}`;
+
+  const [state, setState] = useState(
+    shouldPersist && key !== undefined
+      ? () => JSON.parse(localStorage.getItem(lookupKey)) || initialValue
+      : initialValue
+  );
+
+  useEffect(() => {
+    if (shouldPersist && key) {
+      localStorage.setItem(lookupKey, JSON.stringify(state));
+    }
+  }, [state]);
+
+  return [state, setState];
+};

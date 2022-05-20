@@ -5,7 +5,9 @@ const rootElement = document.getElementById("root");
 const root = createRoot(rootElement);
 
 root.render(
-  <AppContext.Provider value={{ shouldPersist: true }}>
+  <AppContext.Provider
+    value={{ appName: "internal-booking", shouldPersist: true }}
+  >
     <App />
   </AppContext.Provider>
 );
